@@ -22,6 +22,10 @@ ARCH=$1
 # Build the binary.
 CGO_ENABLED=0 GOOS=linux GOARCH=${ARCH} godep go build -a -installsuffix cgo -ldflags '-w' ./pause.go
 
-# Run goupx to shrink binary size.
-go get github.com/pwaller/goupx
-goupx pause
+#Binary shrinking via UPX is not supported for PPC64LE arch
+if [ "${ARCH}" != "ppc64le" ]
+then
+    # Run goupx to shrink binary size.
+    go get github.com/pwaller/goupx
+    goupx pause
+fi

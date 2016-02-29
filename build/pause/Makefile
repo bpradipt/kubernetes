@@ -16,8 +16,13 @@
 
 TAG = 2.0
 
-ARCH = amd64
-IMAGE = pause
+ARCH= $(shell go env GOARCH)
+ifeq ("${ARCH}", "amd64")
+       IMAGE = pause
+else
+       IMAGE = ${ARCH}/pause
+endif
+
 # ARCH = arm
 # IMAGE = pause-arm
 
